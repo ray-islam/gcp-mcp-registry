@@ -20,13 +20,46 @@ GCP MCP Registry is designed to answer questions such as:
 - Can security teams produce evidence showing approved state versus observed runtime state?
 
 ## How this differs from Google Cloud Agent Registry
-Google Cloud Agent Registry provides registration and discovery of agents, MCP servers, and tools. GCP MCP Registry adds an independent runtime-assurance layer by observing live MCP capabilities and reconciling them against the registered or approved baseline.
 
-The project is designed to detect cases where a live MCP server exposes capabilities that differ from its approved registry state.
+Google Cloud Agent Registry provides centralized registration and discovery for agents, MCP servers, tools, endpoints, and related resources.
 
-In short:
-Google Cloud Agent Registry = what should exist
-GCP MCP Registry = verify what actually exists at runtime
+GCP MCP Registry is designed to **complement** that functionality by independently observing live MCP capabilities and reconciling them against a registered or approved baseline.
+
+For example, a registry may indicate that an MCP server is expected to expose:
+
+```text
+search
+read
+```
+
+If the live MCP server later exposes:
+
+```text
+search
+read
+delete_account
+```
+
+GCP MCP Registry can identify the additional capability as runtime drift.
+
+### Key distinction
+
+| Google Cloud Agent Registry | GCP MCP Registry |
+|---|---|
+| Registers and discovers agents, MCP servers, tools, and related resources | Independently observes live MCP capabilities |
+| Represents registered or expected state | Compares expected state with observed runtime state |
+| Provides centralized inventory and discovery | Provides continuous runtime assurance |
+| Serves as an approved or registered baseline | Detects drift from that baseline |
+| Helps identify what is registered | Helps verify whether runtime state still matches what was registered |
+
+**In short:**
+
+- **Google Cloud Agent Registry:** What is registered or expected
+- **GCP MCP Registry:** Whether what is running now still matches that expected state
+
+GCP MCP Registry is not intended to replace Google Cloud Agent Registry. It provides an additional assurance layer between registry state and observed runtime behavior.
+
+
 
 ## Project goal
 
